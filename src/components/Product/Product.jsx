@@ -1,10 +1,28 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addToCart } from 'redux/cartSlice';
+
 
 // import s from './Product.module.scss';
 import { StyledProduct, StyledProductBtn } from './Styled';
 
-export const Product = ({ image, price, discount = {}, title }) => {
-  // const { image, price, discount = {}, title } = props;
+export const Product = ({ image, price, discount = {}, title, id }) => {
+  
+  const dispatch = useDispatch()
+
+  const handleAddToCart = () => {
+    const product =  {
+        id,
+        img: image,
+        price,
+        discount,
+        title,
+      }
+
+    dispatch(addToCart(product))
+  }
+
+
   const hasDiscount = discount.hasOwnProperty('value');
   return (
     <StyledProduct discount={hasDiscount}>
@@ -15,7 +33,7 @@ export const Product = ({ image, price, discount = {}, title }) => {
           Price: {price}$
           <span className="productDiscount">DISCOUNT -{discount.value}%</span>
         </p>
-        <StyledProductBtn type="button">
+        <StyledProductBtn type="button" onClick={handleAddToCart}>
           <span>Buy now</span>
         </StyledProductBtn>
       </div>

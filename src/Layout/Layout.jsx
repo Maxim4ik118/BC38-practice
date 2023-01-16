@@ -37,6 +37,22 @@ function Layout({ children }) {
           >
             Details
           </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              cn(css.NavLink, { [css.active]: isActive })
+            }
+            to="/products"
+          >
+            Products
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              cn(css.NavLink, { [css.active]: isActive })
+            }
+            to="/cart"
+          >
+            Cart
+          </NavLink>
         </nav>
       </header>
       {children}

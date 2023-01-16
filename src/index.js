@@ -1,18 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
 
 import { App } from 'App';
 import { ThemeProvider } from 'contex/ThemeContext';
 
 import './index.css';
+import { store } from 'redux/store';
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ThemeProvider>
     <BrowserRouter 
  //  basename="/react-goit-homework-05"
     >
+      <Provider store={store}>
       <App />
+      </Provider>
     </BrowserRouter>
   </ThemeProvider>
 );
