@@ -1,6 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
+import { BsCart4 } from 'react-icons/bs';
 
 import css from '../App.module.scss';
 
@@ -9,10 +11,15 @@ const styles = {
 };
 
 function Layout({ children }) {
+  const cartList = useSelector(state => state.cart.cart);
+  const productsCount = cartList.reduce(
+    (acc, { quantity }) => acc + quantity,
+    0
+  );
   return (
     <div style={styles}>
       <header className={css.header}>
-        <nav>
+        <nav className={css.nav}>
           <NavLink
             className={({ isActive }) =>
               cn(css.NavLink, { [css.active]: isActive })
@@ -46,12 +53,18 @@ function Layout({ children }) {
             Products
           </NavLink>
           <NavLink
-            className={({ isActive }) =>
-              cn(css.NavLink, { [css.active]: isActive })
+            className={
+              ({ isActive }) =>
+                cn(css.NavLink, css.cart, { [css.active]: isActive })
+              // `${css.NavLink} ${css.cart} ${isActive ? css.active : ''}`
+              // css.NavLink + css.cart + isActive ? css.active : ''
             }
             to="/cart"
           >
-            Cart
+            <BsCart4 />
+            {productsCount > 0 && (
+              <span className={css.indicator}>{productsCount}</span>
+            )}
           </NavLink>
         </nav>
       </header>

@@ -4,12 +4,11 @@ import { useSelector } from 'react-redux';
 
 
 const Products = () => {
-    const products = useSelector(state => state.products.products)
+  const products = useSelector(state => state.products.products);
 
 
   return (
     <div>
-      
       <ul>
         {products && products.map(({id, img, price, discount, title}) => {
             return (

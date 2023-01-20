@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Функція сервіс
 export const fetchPosts = async () => {
-  const { data } = await axios.get(
+  const { data } = await axios.post(
     'https://jsonplaceholder.typicode.com/posts'
   );
 

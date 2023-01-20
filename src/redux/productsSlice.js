@@ -33,7 +33,7 @@ const initialState = {
           title: 'Taco M',
         },
       ],
-    // favouriteProducts: [],
+    favouriteProducts: [],
   }
 
 const productsSlice = createSlice({

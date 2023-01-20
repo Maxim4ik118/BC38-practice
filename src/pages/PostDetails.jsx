@@ -1,39 +1,28 @@
 import ErrorIndicator from 'components/ErrorIndicator';
 import Loader from 'components/Loader/Loader';
-import React, { lazy, Suspense, useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Routes, useParams, useLocation } from 'react-router-dom';
+import { requestPostDetails } from 'redux/postSlice';
 
-import { fetchPostDetails } from 'services/api';
-// import PostComments from './PostComments';
 const PostComments = lazy(() => import('./PostComments'));
 
-// import PostComments from './PostComments';
+
 
 function PostDetails() {
-  const [postDetails, setPostDetails] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const postDetails = useSelector(state => state.posts.postDetails);
+  const isLoading = useSelector(state => state.posts.isLoading);
+  const error = useSelector(state => state.posts.error);
+  const dispatch = useDispatch();
+
+
   const { postId } = useParams();
   const location = useLocation();
 
   useEffect(() => {
     if (!postId) return;
-
-    const getPostDetails = async postId => {
-      try {
-        setIsLoading(true);
-        const postDetails = await fetchPostDetails(postId);
-
-        setPostDetails(postDetails);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getPostDetails(postId);
-  }, [postId]);
+    dispatch(requestPostDetails(postId));
+  }, [postId, dispatch]);
 
   return (
     <div>
@@ -59,7 +48,9 @@ function PostDetails() {
         </div>
       )}
 
-      <Link to="comments" state={{from:location?.state?.from}}>Comments</Link>
+      <Link to="comments" state={{ from: location?.state?.from }}>
+        Comments
+      </Link>
 
       <Suspense fallback={<Loader />}>
         <Routes>

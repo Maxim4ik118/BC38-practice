@@ -1,38 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ErrorIndicator from 'components/ErrorIndicator';
 import Loader from 'components/Loader/Loader';
-
-// import useSelectPost from 'hooks/useSelectPost';
-
-import { fetchPosts } from 'services/api';
+import {requestPosts} from '../redux/postSlice';
 
 import css from '../App.module.scss';
 
 function HomePage() {
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  const getPosts = async () => {
-    try {
-      setIsLoading(true);
-      const posts = await fetchPosts();
-
-      setPosts(posts);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+ const posts = useSelector(state => state.posts.posts);
+ const isLoading = useSelector(state => state.posts.isLoading);
+ const error = useSelector(state => state.posts.error);
+ const dispatch = useDispatch();
 
   useEffect(() => {
-    getPosts();
-  }, []); // componentDidMount
+    dispatch(requestPosts());
+  }, [dispatch]); // componentDidMount
 
-  const hasError = error.length > 0;
+  const hasError = error?.length > 0;
   return (
     <>
       {hasError && <ErrorIndicator error={error} />}
