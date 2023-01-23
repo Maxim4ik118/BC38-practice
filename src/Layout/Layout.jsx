@@ -25,14 +25,6 @@ function Layout({ children }) {
             className={({ isActive }) =>
               cn(css.NavLink, { [css.active]: isActive })
             }
-            to="/posts"
-          >
-            Search Post
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              cn(css.NavLink, { [css.active]: isActive })
-            }
             to="/details"
           >
             Details
@@ -44,6 +36,30 @@ function Layout({ children }) {
             to="/products"
           >
             Products
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              cn(css.NavLink, { [css.active]: isActive })
+            }
+            to="/register"
+          >
+            Sign Up
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              cn(css.NavLink, { [css.active]: isActive })
+            }
+            to="/login"
+          >
+            Login
+          </NavLink>
+          <NavLink
+            className={({ isActive }) =>
+              cn(css.NavLink, { [css.active]: isActive })
+            }
+            to="/contacts"
+          >
+            Contacts
           </NavLink>
           <NavLink
             className={({ isActive }) =>
